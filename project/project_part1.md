@@ -134,14 +134,16 @@ The useful parameters/features we have about each movie are:
 
 Other files mostly contain links to other databases for movies, and information
 about cast and crew for each movie. The whole data set contains around 45000 movies.
+If we inclue all of the subtitles we have arround 60 GB's of
 
 We decided to only analise the 5000 movies with highest revenue and
-filtered movies that are already realised only realised movies. For each of this movie we also downloaded
-subtitles for each of the movie to use in analysis. We decided to go with
-the subset due to performance and space issue with the whole data set.
+filtered movies that are already realised only realised movies. For each
+of this movie we also downloaded subtitles to use in analysis. We decided to go with
+the subset due to performance and space issues with the whole data set.
 
-There are (ACTOR NUM) of actors in this data set and (DIRECTOR_NUM) of
-directors in our data set.
+There are 18.694 of actors with (CONNECTION NUMBER) connections connecting the network.
+We also created an director graph, with (DIRECTOR_NUM) directors and (DIRECTOR CONNECTIONS)
+connections between them in our data set.
 
 In our analysis we will include:
 
@@ -150,6 +152,9 @@ movie in our dataset. We will analise the network, to see how it looks like.
 We wanna see if there are communities within actor community, see if the
 network looks like normal random network. We predict we may find the marvel actors community.
 See also wanna see actors have the highest degree in the graph...
+
+We are interested on what is the length of longest path between two actors,
+what is the average distance between them ...
 
 We will also create a network of directors, being connected
 1. if they worked with each other
@@ -173,6 +178,9 @@ avarage sentiment. We are interested in how much does the most polular
 movie differ from their usual style.
 
 We were also thinking of comparing sentiment of overviews of movies to the movies itself.
+
+In the end we will try to create the perfect movie. Take word-clouds to
+create a new title. Take the most popular genre...
 
 Thanks for your attention. Hope you like our ideas. If you have any
 suggestions please feel free to talk with us!
