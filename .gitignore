@@ -107,3 +107,6 @@ venv.bak/
 
 .DS_Store
 *.DS_Store
+
+# dataset ignore
+/project/the-movies-dataset
