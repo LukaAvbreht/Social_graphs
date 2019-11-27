@@ -1,0 +1,33 @@
+<director shot>
+	When creating a movie, a director has the opportunity to shape every frame, every dialog as he/she likes, </cut> therefor giving an infinite number of possibilities when shooting a movie.
+</director shot><12s>
+<blank frame>
+	However, </break>
+</blank frame> 
+<looking for movie>
+	often when we watch a new movie, we feel like "oh, i've seen this before" or "it was too predictable"
+</looking for movie><10s>
+But what makes a movie redundant ? What are the codes and lazy habits ? That's what we are trying to figure out ! <illustration of the group with names> <8s>
+
+For our research, we are using the Kaggle's movie data set,
+<blur> which is split in 7 files and include <show entries> several data points like titles, budgets and genres just to name a few.
+<other image>
+In addition to metadata, we are using movies' subtitles <blur + open subtitle logo> from OpenSubtitle to get a deeper understanding of each movie.
+<word cloud example ?>For example, we will be looking for which words are the most used depending on a movie's genre and it's director.
+
+<other photo> The whole data set we are using contains around 45000 movies. <transition> 
+Metadata and subtitles combined account for more than 60 GB of data.
+
+<other photo>But, because of performance and space issues, we decided to only work with a subset of data. We chose 5000 movies with the highest revenue that already came out.
+
+So first, we are creating a network where every node is a director and they are linked together if they have employed the same actor.
+<Simple representation of dirA - actA - dirB>
+If we draw the graph for our 18.694 actors and 2050 directors <fusion effect>, we get this graph. 
+<Display total graph with weights & degree distribution>
+
+Because the first graph we tried to draw is too crowded, we decided to create the actor's graph as well. 
+Two actors are linked together if they appeared on the same movie.
+To avoid having too much nodes, we only selected actors with at least 500 connections.
+
+
+But then, once we will have our results, what could we do with them ? Well we will try to predict the "most predictable" movie from the most popular genre. This includes casting the best actors and director.
