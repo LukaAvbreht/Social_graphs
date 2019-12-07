@@ -173,13 +173,26 @@ svg {
   vertical-align: middle; }
 
 table {
-  border-collapse: collapse; }
-.directors_table{
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.my_table{
     margin-top: 30px;
     margin-bottom: 30px;
+  width: 100%;
 }
-.directors_table td, th {
+.my_table th {
     border-bottom: 1px solid #ddd;
+}.my_table th {
+    border-bottom: 1px solid #ddd;
+}
+.community_table th {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0 10px 20px;
+}
+.community_table td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0 10px 20px;
 }
 caption {
   padding-top: 0.75rem;
@@ -9592,3 +9605,7 @@ section {
 .navbar-brand {
   font-weight: 700;
   font-size: 22px; }
+.indented {
+    padding-left: 50px;
+    padding-right: 50px;
+}

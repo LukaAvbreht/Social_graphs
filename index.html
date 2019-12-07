@@ -132,9 +132,9 @@
                         </tr>
                     </table>
                     <div style="margin-top: 20px">
-                        <b>
+                        <h3>
                             Does the network structure resemble that of a random network?
-                        </b>
+                        </h3>
                         <p>
                             The degree distribution of a random network does follow a Poisson distribution. To compare the degree distribution of our network with a Poisson we try to fit a normal distribution curve over the degree distribution to see how well it fits.
                         </p>
@@ -148,6 +148,49 @@
                             </td>
                             </tr>
                         </table>
+                        <h3>Is this a scale-free network?</h3>
+                        <p>A scale-free network is a network whose degree distribution follows a power law. (ch. 4 in networks book). The power law states that there are a lot of nodes with a very small degree and a few nodes with a very high degree. When plotting the degree distribution of a network that follows the power law with loglog axes it should resemble a straigh line (or close to that).</p>
+                        <table style="width: 100% ">
+                            <tr>
+                            <td class="image-wrap center" style="width: 60% ">
+                                <img src="images/degree_point_plot.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                            </td>
+                            <td style="padding: 10px">
+                                It does not look like it follows the power law. Let's plot it using log-log axes.
+                            </td>
+                            </tr>
+                        </table>
+                        <table style="width: 100% ">
+                            <tr>
+                            <td class="image-wrap center" style="width: 60% ">
+                                <img src="images/degrees_point_plot_log.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                            </td>
+                            <td style="padding: 10px">
+                                It does not really follow the power law but it is still a very broad distribution meaning that the difference between the minum degree and the maximum degree is very large.
+                            </td>
+                            </tr>
+                        </table>
+                        <b>Is the friendship paradox true in this network?</b>
+                        <p class="indented">Paradox is true 92.4 % of the time</p>
+                        
+                        <p>In a nework with a power-law degree distribution the friendship paradox is true. The paradox states that almost everyone has fewer friends than their friends have on average. Meaning that the degree of most nodes is lower that the average degree of its neighbours. Even though we found that our network does not really have a power-law degree distribution the friendship paradox is still true for most nodes, so the network does still some property of a real-life network.</p>
+                        <h3>The small world property</h3>
+                        <p>Does the small world propery hold in our network? The small-world property states that the distance between two nodes is very small compared to the size of the network. The mathematical formula that states whether a netork has the small-world property is printed below (ch. 3 in Network Science book).</p>
+                        <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                            <img style="display: flex; width: 200px" src="images/eq_3_19.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                            <div style="display: flex; padding-left: 20px">
+                                <p style="display: flex"> eq. 3.19 Network Science book</p>
+                            </div>
+                        </div>
+                        <p>The equation states that the average distance between nodes should be approximately equal to the natural logarithm of n divided by the natural logarithm of the average degree.</p>
+                        <p>Adding our values gives: </p>
+                        <div class="indented">
+                            <img style="width: 200px" src="images/eq_3_19_numbers.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                        </div>
+                        <p>Are these number close enough to call the network a small world? We will say yes, and state that this is a small world network.</p>
+                        <h3>Conclusion regarding degree distribution</h3>
+                        <p>The network does not resemble a random network but it does not have a clear power-law degree distribution either. However the friendship paradox is true for 92.4% percente of the nodes and it does have the small world property. To sum up it does resemble a real-life network more than a random network.</p>
+                        
                     </div>
                 </section>
                 <section>
@@ -221,7 +264,7 @@
                     <p>
                         First of all they are all very famous. Lets find their ratings, their vote count and how many movies they have directed.
                     </p>
-                    <table class="directors_table" style="width: 100%">
+                    <table class="my_table">
                         <tr>
                             <th style="width: 20%; padding: 5px;"> 
                             </th>
@@ -336,7 +379,138 @@
                     Their vote count is high compared to the rest of the network, but their rating is not that high. This shows that directors who are central in the network do not necessary have a high rating. However their vote count is also an indicator of popularity or at least of how famous they are, and this is quite high for all of them. The fact that they all have a high number of movies is not surprising as this will of course give them a higher probality of being connected with other directors. Their genres are all very popular genres which also increases the likelihood that they share actors with other directors.
                     </p>
             </section>
+            <section>
+                <h2>Community Detection</h2>    
+                <p>In this section we will describe the communities of the netork and analyse where these communities come from. We will do this by looking at some of the attributes that we have for the directors in our dataset.</p>
+                    <p>We found the following communities</p>
+                <div class="indented">
+                    <table class="community_table">
+                        <tr>
+                            <th>
+                                Community
+                            </th>
+                            <th>
+                                Size
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                0
+                            </th>
+                            <td>
+                                417
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                1
+                            </th>
+                            <td>
+                                223
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                2
+                            </th>
+                            <td>
+                                394
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                3
+                            </th>
+                            <td>
+                                90
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                4
+                            </th>
+                            <td>
+                                100
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                5
+                            </th>
+                            <td>
+                                48
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <p style="margin-top: 30px">The modularity is 0,228. The modularity is above 0 which means that there are more edges within the communities than there are across communities. However the modularity is not that high which means that the community are not that well defined.</p>               
+                <div class="image-wrap center">
+                    <img src="images/communities.png" alt="communuties" class="rounded img-fluid image image-2">
+                    <div class="text">
+                        <span class="position">The communities of the network illustrated using different colors.</span>
+                    </div>
+                </div>
+                <p>The plot above illustrates the communities using different colours for each community. We see that the network is split into three bigger parts and two smaller parts at the right and one small community inside another one</p>
+                <h3>Analysis of communities</h3>
+                <p>We will look at three different attributes: language, genre, active period and rating, to see if anything can be said about the communities regarding these. We want to find out if the communities can be distinguished using any of these attributes.</p>
                 
+                <h3>Languages</h3>  
+                <p> We have seperated the directors into groups of languages based on the language of their movies.</p>
+                <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                    <img style="display: flex; flex:5;" src="images/confusion_matrix_lang.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                    <div style="display: flex; flex: 3; padding-left: 20px">
+                        <p style="display: flex;"> The figure shows a heatmap where each cell shows the percentage of the community that direct movies of that specific language. Community 3 and 5 seem to be based on language. Community 3 mostly has mostly directors of french movies and some italian movies, community 5 mostly directors of japanese and cantonese movies. The other communities have mostly directors of english movies however community 2 does have a higher percentage of movies of many of the smaller languages than the other communities. </p>
+                    </div>
+                </div>
+                <h3>Genres</h3>                
+                <p>We have created one group for each genre and added directors to the groups that they have worked whithin. One director might have worked in more than one genre.</p>
+                <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                    <img style="display: flex; flex:5;" src="images/confusion_matrix_genres.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                    <div style="display: flex; flex: 3; padding-left: 20px">
+                        <p style="display: flex;"> The figure shows a heatmap where each cell shows the percentage of the community that have directed movies in that specific genre. As mentioned above, each directed might have worked in multiple genres therefor the percentages for one community do not add up to 100%. </p>
+                    </div>
+                </div>
+                <p>We observe that all communities are a mix of multiple genres which makes sense since we know that directors and actors do not restrict themselves to a single genre. There are some genres that are quite common among all communities such as drama, comedy, romance, thriller and action. These are all genres that are somewhat general and a lot of movies will have these genres listed as their genre along with other more significant genres. There are however some differences between the communities that might be of significans. Communty 4 has directors working in multiple genres that are not as common in the other communities such as music, history, mystery, western and war. Community 5 has a high percentage of directors working in the genres foreign, fantasy and science fiction. Community 1 has a high percentage of directors working in the genres thrillers, mystery, horror and science fiction.</p>
+                
+                <h3>Active Period</h3>  
+                <p> We have created one group for each decade and add directors to the group if they were active in that decade. We define the active period of a director as the time from the release of the first movie to the release of the last movie.</p>
+                <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                    <img style="display: flex; flex:5;" src="images/confusion_matrix_period.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                    <div style="display: flex; flex: 3; padding-left: 20px">
+                        <p style="display: flex;"> The figure shows a heatmap where each cell is the percentage of the community that were active in that decade. A director can be active over a period of more than 10 years and hence can be in multiple groups. Therefor the percentages of each community do not add up to 100%. We observe that community 4 consists mainly of older movies. It makes sense that the directors of older movies are grouped together as not many of the same actors are acting in older as well as newer movies. We can also spot that directors of movies released after year 2000 are in community 0 and 2, while directors of movies from 1980-2000 are more dominant in community 1. Community 3 and 5 are not as concentrated on a specific period but are spread out from 1970 until 2020. </p>
+                    </div>
+                </div>
+                <h3>Rating</h3>                
+                <p>We have divided the ratings into 5 groups of equal size: low, medium-low, medium, medium-high and high. The directors are then added to the group for which their agerage rating falls within.</p>
+                <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                    <img style="display: flex; flex:5;" src="images/confusion_matrix_rating.png" alt="degree distribution" class="rounded img-fluid image image-2">
+                    <div style="display: flex; flex: 3; padding-left: 20px">
+                        <p style="display: flex;"> The figure shows a heatmap where each cell is the percentage of the community that have a rating in that group. There does not seem to be a high correlation between rating and communities. Community 0 and 1 have a larger part of low rating directors while community 2, 3 and 5 have a larger part of high rating directors. Community 4 has the largest part around the medium rating. However there is not a huge difference in the numbers. </p>
+                    </div>
+                </div>
+                <h3>Conclusion about communities</h3>
+                <p>So what can we say about the communities? First of all, the modularity is not significantly high, so the communities are not that solid. We examined different groupings of the directors to see if there is a correlation with the found communities. We tried grouping the directors by language, by genre, by active period and by rating. We discovered the following about the communities:</p>
+                <ul>
+                    <li>Community 0 consists almost solely of directors of english movies. Regarding active period it consists mostly of directors active in the recent decades.</li>
+                    <li>Community 1 also consist mainly of directors of english movies. It has a high percentage of directors working in drama, thrillers and action. Over half of the community has been rated below medium and most directors were active in the years 1980-2010.</li>
+                    <li>Community 2 has a higher number of percentage of directors working in many of the smaller languages than the other communities. It consists mainly of directors active after 1990. Almost haf of the community has been rated above average.</li>
+                    <li>Community 3 consists mainly of directors of french and italian movies. Most of the directors in that community are working with commedy and drama. The directors have been active in the last 50 or so years. Over half of the community has been rated above average.</li>
+                    <li>Community 4 is characteries as being the community of directors of older movies. Most directors were active in the years 1940-1990. The genres are also a bit different than of the other communities. These directors were working more in the genres music, history, mystery, western and war which are genres that were more popular a few decades ago than they are today.</li>
+                    <li>Community 5 consists mainly of directors of japanese and cantonese movies. These directors are directing foreign, fantasy and science fiction movies and a more than a third of the community has received a high rating.
+                    </li>
+                </ul>
+                <p>
+                    The analysis showed that some of the communities seem to be defined by attributes such as language (3 and 5) and active period (4) while the others are more mixed and it's harder to distinguish what makes the community.
+                </p>
+                <b>So in what communities are our most central directors?</b>
+                <p> Our guess would be in the mixed communities 0, 1 or 2. These are afterall also the largest communities and they seem to hold the more mainstreem directors.</p>
+                <ul>
+                    <li>Steven Spielberg: 2</li>
+                    <li>Woody Allen: 1</li>
+                    <li>Ridley Scott: 2</li>
+                </ul>
+                <p>The most central nodes are indeed in communies 1 and 2.</p>
+            </section> 
             </div>
         </div>
     </section>
