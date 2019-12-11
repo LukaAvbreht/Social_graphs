@@ -48,6 +48,7 @@
                             <b class="caret"></b>
                         </a>
                         <div class="dropdown-menu dropdown-menu-left">
+                            <a href="https://nbviewer.jupyter.org/github/LukaAvbreht/Social_graphs/blob/master/project/Project_overview.ipynb?flush_cache=true" class="dropdown-item">Project overview</a>
                             <a href="./project/network_analysis.ipynb" class="dropdown-item">Network analysis</a>
                             <a href="./project/Sentiment%20analysis%20.ipynb" class="dropdown-item">Sentiment analysis</a>
                             <a href="./project/Wordcloud_Generator.ipynb" class="dropdown-item">Wordcloud</a>
@@ -95,6 +96,33 @@
                         too predictable".
 
                         But what makes a movie redundant ? What are the codes and lazy habits ?
+                    </p>
+                    <p>
+                        Our goal is to provide an overview of directors and how they link to each. We will create a network of directors where two directors are linked if they have hired any of the same actors. We want to find out what kind of network this is, who the most central directors are and whether there are any communities within it. On top of this we will analyse the subtitles for every movie of these directors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">Our dataset</h1>
+                    <p>
+                       The original Movies Dataset consists of 6 files:
+                        <ul>
+                            <li>movies_metadata.csv: The main Movies Metadata file. Contains information on 45,000 movies featured in the Full MovieLens dataset. Features include posters, backdrops, budget, revenue, release dates, languages, production countries and companies.
+                            </li>
+                            <li>keywords.csv: Contains the movie plot keywords for our MovieLens movies. Available in the form of a stringified JSON Object.</li>
+                            <li>credits.csv: Consists of Cast and Crew Information for all our movies. Available in the form of a stringified JSON Object.</li>
+                            <li>links.csv: The file that contains the TMDB and IMDB IDs of all the movies featured in the Full MovieLens dataset.</li>
+                            <li>links_small.csv: Contains the TMDB and IMDB IDs of a small subset of 9,000 movies of the Full Dataset.</li>
+                            <li>ratings_small.csv: The subset of 100,000 ratings from 700 users on 9,000 movies.</li>
+                        </ul>
+The original dataset contains over 45.000 movies and we decided that this was an unnecessary amount of data for our purposes. We chose to work on a subset of the data to make it easier to work with. We wanted to make sure we included every "known" director so to speak. We did not care if we lost information about directors that for example have only created one movie or a few movies which did not receive high publicity. We decided to filter the directors based on how many votes or ratings they had gotten. The vote number for each movie is in the dataset, so it was a straightforward procedure to get the total vote count for each director. We decided to set the limit at 500 votes, i.e. only include directors that have received a total of over 500 votes. We chose 500 partly because that is a "significant" amount and because that would get our data size down to a more suitible size.
+
+Filtering the original data gave us a dataset of 10.605 movies and 1.273 directors. With this we created the network of directors which consists of 1.273 nodes and 217.725 edges.
                     </p>
                 </div>
             </div>
