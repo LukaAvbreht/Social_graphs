@@ -53,8 +53,12 @@
                             <a href="#" class="dropdown-item"><i class="ion-ios-document mr-2"></i> Documentation</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link icon d-flex align-items-center"><i
-                            class="ion-ios-cloud-download mr-2"></i> Download</a></li>
+                    <li class="nav-item"><a href="#netanalysis" class="nav-link icon d-flex align-items-center"><i
+                            class="ion-ios-cloud-download mr-2"></i> Network Analysis</a></li>
+                    <li class="nav-item"><a href="#wordclouds" class="nav-link icon d-flex align-items-center"><i
+                            class="ion-ios-cloud-download mr-2"></i> Wordclouds</a></li>
+                    <li class="nav-item"><a href="#sentanalysis" class="nav-link icon d-flex align-items-center"><i
+                            class="ion-ios-cloud-download mr-2"></i> Sentiment analysis</a></li>
                     <li class="nav-item cta"><a href="#" class="nav-link icon d-flex align-items-center"><i
                             class="ion-ios-copy mr-2"></i> Premium</a></li>
                 </ul>
@@ -102,7 +106,7 @@
         </div>
     </section>
 
-    <section class="ftco-section">
+    <section class="ftco-section" id="netanalysis">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -665,38 +669,595 @@
         </div>
 
     </section>
-    <section class="ftco-section bg-light">
+    
+    
+    
+    <section class="ftco-section bg-light" id="wordclouds">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="heading-section mb-4">Wordclouds</h1>
+                    <h1 class="mb-4">Wordclouds</h1>
+                    
+                    <p>
+                        While working with our wordclouds, we found quickly which genres where linked together and by which environment. In appears that some genres are clustered together most of the time because of a serie of movie or some sort of synergy.
+                    </p>
                     <div class="tabulation tabulation2">
-                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
-                            <div class="d-inline-block">
-                                <ul class="nav nav-tabs border-0">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#fantasy">Fantasy</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#romantic">Romantic</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#sf">Science Fiction</a>
-                                    </li>
-                                </ul>
+                        <div class="d-flex tabs border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block" style="text-align: center">
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#action">
+									  Action
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#adventure">
+									  Adventure
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#animation">
+									  Animation
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#comedy">
+									  Comedy
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#crime">
+									  Crime
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#documentary">
+									  Documentary
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#drama">
+									  Drama
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#family">
+									  Family
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#fantasy">
+									  Fantasy
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#foreign">
+									  Foreign
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#horror">
+									  Horror
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#music">
+									  Music
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#history">
+									  History
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#mystery">
+									  Mystery
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#romance">
+									  Romance
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#scifi">
+									  Science Fiction
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#tvmovie">
+									  TV Movie
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#thriller">
+									  Thriller
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#war">
+									  War
+									</button>
+									<button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary" data-toggle="modal" data-target="#western">
+									  Western
+									</button>
                             </div>
                         </div>
+                        
+                        <div>
+                            <div class="modal fade" id="action" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Action</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>After creating the Action wordcloud, we found out that a lot of words sound like japanese names. When looking deeper into it, it appears that because a lot of japanese movies got famous worldwide, they got translated in english, which got them in our dataset.
+                                    
+                                      </p>
+                                      <p>
+                                    Furthermore, japanese characters in movies are known for calling each others out during battle, which could explain why we have a lot of hero's names in our wordcloud.</p>
+                                      
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Action.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="adventure" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Adventure</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Adventure movies are often related to fantastic worlds. We have for example, in our wordcloud, references to the world of Obelix, Pokemons (Celebi & Pikatchu) and Littlefoot.</p>
 
-                        <!-- Tab panes -->
-                        <div class="tab-content border-0">
-                            <div class="tab-pane container p-4 active text-center" id="fantasy">
-                                <p>Wow so much fantasy</p>
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Adventure.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="tab-pane container p-4 fade text-center" id="romantic">
-                                <p>Romantic was a long oen</p>
+                            
+                            <div class="modal fade" id="animation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Animation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Animation movies mostly reflects our childhood with universes like Pokemon, Winnie the Pooh, Monster High and countless others.
+                                    </p>
+                                    <p>Movies found with the Animation genre are often Fantastic and/or about adventure.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Animation.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <div class="tab-pane container p-4 fade text-center" id="sf">
-                                <p>Oh ma boi science fiction</p>
+                            
+                            <div class="modal fade" id="comedy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Comedy</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>We can hardly miss it, you probably already noticed but we found a reference to American Pie in this wordcloud (Stifler), a very known comedy movie with numerous volumes.</p>
+                                    <p>
+                                        In addition, we found an unusual word here for subtitles, "Torrente". At first we thought that it could be because of some subtitles where the word would be written to notify a specific download link for pirates or others. In this case, "Torrente" would appear in every wordcloud, so we dug deeper. In the end, it seems like there are multiple movies about a cop in spain.
+                                    </p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Comedy.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="crime" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Crime</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>For Crimes, we find again "Torrente" but this time with other famous inspector names, like Poirot or Marple for example.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Crime.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="documentary" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Documentary</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>The Documentary genre is often linked with hot topics. We can notice for example the word "Bitcoin" which got a lot of documentaries during its boom in 2017.</p>
+                                    
+                                    <p>In addition to hot topics, we can found out of the norms people who had documentaries made about their life, how they became famous etc.
+                                      </p>
+                                      
+                                    <p>On a sidenote, we found weird squares in our wordcloud, those squares could be used in our subtitles by National Geographic Channel to substitute there logo.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Documentary.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="drama" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Drama</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Dramas are often one time movies, which means that some words might not be particularly more used than others.</p>
+                                    
+                                      <p>On another note, if we included TV shows in our dataset, we would surely have something relating to "The Young and the Restless" because TV shows are often more oriented towards drama to keep the audience's attention.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Drama.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="family" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Family</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Family movies are, like Animation and Fantasy, often linked together because it implies most of the time a fantastic world. So we found, once again, universes like Pokemon and Littlefoot but this time accompanied by puppet shows.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Family.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="fantasy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Fantasy</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>The Fantasy genre is one of the broadest genres because it suits a lot of movie subjects. We found again universes like Pokemon and Monster High but this time we have action movies too. For example The Mummy and Fantomas.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Fantasy.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="foreign" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Foreign.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="horror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Horror.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="music" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Music.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/History.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="mystery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Mystery.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="romance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Romance.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="scifi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Science%20Fiction.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="tvmovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/TV%20Movie.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="thriller" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Thriller.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="war" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/War.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="western" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Western.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -705,11 +1266,11 @@
         </div>
     </section>
 
-    <section class="ftco-section">
+    <section class="ftco-section" id="sentanalysis">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="heading-section mb-4">Sentiment analysis</h1>
+                    <h1 class="mb-4">Sentiment analysis</h1>
                     <p>
                         In this section, we will take a closer look at what the text from movie subtitles can tell us
                         about the movies and their authors, the directors!
