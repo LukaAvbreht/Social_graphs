@@ -146,7 +146,11 @@
 144,David O. Russell,John Dahl,Asger Leth,,,
 145,Tom Dey,Jonathan Kaplan,David Cronenberg,,,
 146,McG,Fred Dekker,Richard LaGravenese,,,
+<<<<<<< HEAD
 147,"George Tillman, Jr.",David S. Ward,Brian Helgeland,,,
+=======
+147,George Tillman Jr.,David S. Ward,Brian Helgeland,,,
+>>>>>>> gh-pages
 148,Ben Stiller,John Irvin,Steve McQueen,,,
 149,Jeff Tremaine,Jerry Zucker,Gavin Hood,,,
 150,Larry Charles,Albert Pyun,John Wells,,,
@@ -415,4 +419,8 @@
 413,Damián Szifrón,,,,,
 414,Shane Carruth,,,,,
 415,David Sandberg,,,,,
+<<<<<<< HEAD
 416,John Kahrs,,,,,
+=======
+416,John Kahrs,,,,,
+>>>>>>> gh-pages

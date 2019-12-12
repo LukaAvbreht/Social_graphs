@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Social graphs - Movies and what they tell us</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="css/nouislider.css">
+
+
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<div class="main-section">
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Social graphs</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                    aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link icon d-flex align-items-center"
+                           data-toggle="dropdown">
+                            Notebooks
+                            <b class="caret"></b>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left">
+                            <a href="https://nbviewer.jupyter.org/github/LukaAvbreht/Social_graphs/blob/master/project/Project_overview.ipynb?flush_cache=true" class="dropdown-item">Project overview</a>
+                            <a href="./project/network_analysis.ipynb" class="dropdown-item">Network analysis</a>
+                            <a href="./project/Sentiment%20analysis%20.ipynb" class="dropdown-item">Sentiment analysis</a>
+                            <a href="./project/Wordcloud_Generator.ipynb" class="dropdown-item">Wordcloud</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="#netanalysis" class="nav-link icon d-flex align-items-center"></i> Network Analysis</a></li>
+                    <li class="nav-item"><a href="#wordclouds" class="nav-link icon d-flex align-items-center"></i> Wordclouds</a></li>
+                    <li class="nav-item"><a href="#sentanalysis" class="nav-link icon d-flex align-items-center"></i> Sentiment analysis</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="hero-wrap js-fullheight" style="background-image: url(images/bg_1.jpg);"
+             data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row description js-fullheight align-items-center justify-content-center">
+                <div class="col-md-8 text-center">
+                    <div class="text">
+                        <h1 class="mb-4"><span>Social Graphs</span></h1>
+                        <h4 class="mb-5 mt-2">Movies and what they tell us</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mouse">
+            <a href="#" class="mouse-icon rounded-circle bg-danger">
+                <div class="mouse-wheel"><span class="ion-ios-arrow-round-down text-light"></span></div>
+            </a>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">Introduction</h1>
+                    <p>
+                        When creating a movie, a director has the opportunity to shape every frame, every dialog as
+                        he/she likes, therefor giving an infinite number of possibilities when shooting a movie.
+
+                        However, often when we watch a new movie, we feel like "Oh, I have seen this before" or "It was
+                        too predictable".
+
+                        But what makes a movie redundant ? What are the codes and lazy habits ?
+                    </p>
+                    <p>
+                        Our goal is to provide an overview of directors and how they link to each. We will create a network of directors where two directors are linked if they have hired any of the same actors. We want to find out what kind of network this is, who the most central directors are and whether there are any communities within it. On top of this we will analyse the subtitles for every movie of these directors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">Our dataset</h1>
+                    <p>
+                       The original Movies Dataset consists of 6 files:
+                        <ul>
+                            <li>movies_metadata.csv: The main Movies Metadata file. Contains information on 45,000 movies featured in the Full MovieLens dataset. Features include posters, backdrops, budget, revenue, release dates, languages, production countries and companies.
+                            </li>
+                            <li>keywords.csv: Contains the movie plot keywords for our MovieLens movies. Available in the form of a stringified JSON Object.</li>
+                            <li>credits.csv: Consists of Cast and Crew Information for all our movies. Available in the form of a stringified JSON Object.</li>
+                            <li>links.csv: The file that contains the TMDB and IMDB IDs of all the movies featured in the Full MovieLens dataset.</li>
+                            <li>links_small.csv: Contains the TMDB and IMDB IDs of a small subset of 9,000 movies of the Full Dataset.</li>
+                            <li>ratings_small.csv: The subset of 100,000 ratings from 700 users on 9,000 movies.</li>
+                        </ul>
+The original dataset contains over 45.000 movies and we decided that this was an unnecessary amount of data for our purposes. We chose to work on a subset of the data to make it easier to work with. We wanted to make sure we included every "known" director so to speak. We did not care if we lost information about directors that for example have only created one movie or a few movies which did not receive high publicity. We decided to filter the directors based on how many votes or ratings they had gotten. The vote number for each movie is in the dataset, so it was a straightforward procedure to get the total vote count for each director. We decided to set the limit at 500 votes, i.e. only include directors that have received a total of over 500 votes. We chose 500 partly because that is a "significant" amount and because that would get our data size down to a more suitible size.
+
+Filtering the original data gave us a dataset of 10.605 movies and 1.273 directors. With this we created the network of directors which consists of 1.273 nodes and 217.725 edges.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section" id="netanalysis">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">Network Analysis</h1>
+                    <p>
+                        In this part we will analyse the network of directors. The nodes of the network are directors
+                        and two directors are connected if they have ever hired the same actor. The network consists of
+                        1273 nodes and 217,725 edges. We will analyse the structure of the network and the centrality of
+                        nodes. Then we will analyse the communities of the network.
+                    </p>
+                    <div class="image-wrap center">
+                        <img src="images/graph.png" alt="Round Image" class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position">The network of directors</span>
+                        </div>
+                    </div>
+                    <h2 class="mb-4">Degree Distribution</h2>
+                    <p>
+                        In this section we will take a closer look at the degree distribution and what it says about the
+                        network.
+                    </p>
+                    <table style="width: 100% ">
+                        <tr>
+                            <td class="image-wrap center" style="width: 60% ">
+                                <img src="images/degree_dist.png" alt="degree distribution"
+                                     class="rounded img-fluid image image-2">
+                            </td>
+                            <td style="padding: 10px">
+                                The figure shows the degree distribution of the network. We see that the distribution is
+                                quite broad and most nodes have degrees between 100 and 300.
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="margin-top: 20px">
+                        <h3>
+                            Does the network structure resemble that of a random network?
+                        </h3>
+                        <p>
+                            The degree distribution of a random network does follow a Poisson distribution. To compare
+                            the degree distribution of our network with a Poisson we try to fit a normal distribution
+                            curve over the degree distribution to see how well it fits.
+                        </p>
+                        <table style="width: 100% ">
+                            <tr>
+                                <td class="image-wrap center" style="width: 60% ">
+                                    <img src="images/degree_dist_norm.png" alt="degree distribution"
+                                         class="rounded img-fluid image image-2">
+                                </td>
+                                <td style="padding: 10px">
+                                    As can be seen in the above figure, the destribution does not correspond very well
+                                    to a normal distribution and hence the structure of the network is not like that of
+                                    a random network.
+                                </td>
+                            </tr>
+                        </table>
+                        <h3>Is this a scale-free network?</h3>
+                        <p>A scale-free network is a network whose degree distribution follows a power law. (ch. 4 in
+                            networks book). The power law states that there are a lot of nodes with a very small degree
+                            and a few nodes with a very high degree. When plotting the degree distribution of a network
+                            that follows the power law with loglog axes it should resemble a straigh line (or close to
+                            that).</p>
+                        <table style="width: 100% ">
+                            <tr>
+                                <td class="image-wrap center" style="width: 60% ">
+                                    <img src="images/degree_point_plot.png" alt="degree distribution"
+                                         class="rounded img-fluid image image-2">
+                                </td>
+                                <td style="padding: 10px">
+                                    It does not look like it follows the power law. Let's plot it using log-log axes.
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width: 100% ">
+                            <tr>
+                                <td class="image-wrap center" style="width: 60% ">
+                                    <img src="images/degrees_point_plot_log.png" alt="degree distribution"
+                                         class="rounded img-fluid image image-2">
+                                </td>
+                                <td style="padding: 10px">
+                                    It does not really follow the power law but it is still a very broad distribution
+                                    meaning that the difference between the minum degree and the maximum degree is very
+                                    large.
+                                </td>
+                            </tr>
+                        </table>
+                        <b>Is the friendship paradox true in this network?</b>
+                        <p class="indented">Paradox is true 92.4 % of the time</p>
+
+                        <p>In a nework with a power-law degree distribution the friendship paradox is true. The paradox
+                            states that almost everyone has fewer friends than their friends have on average. Meaning
+                            that the degree of most nodes is lower that the average degree of its neighbours. Even
+                            though we found that our network does not really have a power-law degree distribution the
+                            friendship paradox is still true for most nodes, so the network does still some property of
+                            a real-life network.</p>
+                        <h3>The small world property</h3>
+                        <p>Does the small world propery hold in our network? The small-world property states that the
+                            distance between two nodes is very small compared to the size of the network. The
+                            mathematical formula that states whether a netork has the small-world property is printed
+                            below (ch. 3 in Network Science book).</p>
+                        <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                            <img style="display: flex; width: 200px" src="images/eq_3_19.png" alt="degree distribution"
+                                 class="rounded img-fluid image image-2">
+                            <div style="display: flex; padding-left: 20px">
+                                <p style="display: flex"> eq. 3.19 Network Science book</p>
+                            </div>
+                        </div>
+                        <p>The equation states that the average distance between nodes should be approximately equal to
+                            the natural logarithm of n divided by the natural logarithm of the average degree.</p>
+                        <p>Adding our values gives: </p>
+                        <div class="indented">
+                            <img style="width: 200px" src="images/eq_3_19_numbers.png" alt="degree distribution"
+                                 class="rounded img-fluid image image-2">
+                        </div>
+                        <p>Are these number close enough to call the network a small world? We will say yes, and state
+                            that this is a small world network.</p>
+                        <h3>Conclusion regarding degree distribution</h3>
+                        <p>The network does not resemble a random network but it does not have a clear power-law degree
+                            distribution either. However the friendship paradox is true for 92.4% percente of the nodes
+                            and it does have the small world property. To sum up it does resemble a real-life network
+                            more than a random network.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ftco-section bg-light" id="cards">
+        <div class="container">
+            <div class="row">
+                <h2 class="mb-4">Centrality</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" style="height: 100%">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Degree Centrality</h5>
+                            <p class="card-text" style="text-align: left">The degree of a node is the number of
+                                neighbours of the node, or rephrased as the number of other nodes the node is connected
+                                to.</p>
+
+                            <div style="position: absolute;text-align: left;bottom: 20px;">
+                                <span class="badge badge-pill badge-primary p-2 px-3"
+                                      style="margin-bottom: 1em">Top 5</span>
+                                <ul>
+                                    <li>Woody Allen</li>
+                                    <li>Steven Spielberg</li>
+                                    <li>Ridley Scott</li>
+                                    <li>Martin Scorsese</li>
+                                    <li>Oliver Stone</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="height: 100%">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Betweeness centrality</h5>
+                            <p class="card-text" style="text-align: left">Betweeness centrality indicates how many
+                                shortest paths go through a node and is therefore a good meassure of how central a node
+                                is in a network.</p>
+
+                            <div style="position: absolute;text-align: left;bottom: 20px;">
+                                <span class="badge badge-pill badge-primary p-2 px-3"
+                                      style="margin-bottom: 1em">Top 5</span>
+                                <ul>
+                                    <li>Ridley Scott</li>
+                                    <li>Woody Allen</li>
+                                    <li>Steven Spielberg</li>
+                                    <li>Martin Scorsese</li>
+                                    <li>Ron Howard</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Eigenvector centrality</h5>
+                            <p class="card-text" style="text-align: left">The eigenvector centrality measures the
+                                centrality of a node based on the centrality of its neighbours. If a node is connected
+                                to many nodes that have a high eigenvector centrality then that node will have high
+                                eigenvector centrality. This is an indicator of how high influence a node has in the
+                                network.</p>
+
+                            <div style="text-align: left">
+                                <span class="badge badge-pill badge-primary p-2 px-3"
+                                      style="margin-bottom: 1em">Top 5</span>
+                                <ul>
+                                    <li>Steven Spielberg</li>
+                                    <li>Woody Allen</li>
+                                    <li>Ridley Scott</li>
+                                    <li>Martin Scorsese</li>
+                                    <li>Oliver Stone</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <p>
+                    The same three directors appear in the top 3 for all three centrality measures: Steven Spielberg,
+                    Woody Allen and Ridley Scott.
+                </p>
+                <b>
+                    Who are these top three directors?
+                </b>
+                <p>
+                    First of all they are all very famous. Lets find their ratings, their vote count and how many movies
+                    they have directed.
+                </p>
+                <table class="my_table">
+                    <tr>
+                        <th style="width: 20%; padding: 5px;">
+                        </th>
+                        <th style="width: 20%; padding:  5px;">
+                            Steven Spielberg
+                        </th>
+                        <th style="width: 20%; padding: 5px;">
+                            Woody Allen
+                        </th>
+                        <th style="width: 20%; padding:  5px;">
+                            Ridley Scott
+                        </th>
+                        <th style="width: 10%; padding: 5px; ">
+                            Average
+                        </th>
+                        <th style="width: 10%; padding: 5px;">
+                            Min
+                        </th>
+                        <th style="width: 10%; padding: 5px;">
+                            Max
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            Rating
+                        </td>
+                        <td style="padding: 5px;">
+                            6,894
+                        </td>
+                        <td style="padding: 5px;">
+                            6,692
+                        </td>
+                        <td style="padding: 5px;">
+                            6,604
+                        </td>
+                        <td style="padding: 5px;">
+                            6,23
+                        </td>
+                        <td style="padding: 5px;">
+                            3,45
+                        </td>
+                        <td style="padding: 5px;">
+                            8,0
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            Vote Count
+                        </td>
+                        <td style="padding: 5px;">
+                            62.266
+                        </td>
+                        <td style="padding: 5px;">
+                            15.512
+                        </td>
+                        <td style="padding: 5px;">
+                            43.083
+                        </td>
+                        <td style="padding: 5px;">
+                            3.379
+                        </td>
+                        <td style="padding: 5px;">
+                            501
+                        </td>
+                        <td style="padding: 5px;">
+                            67.239
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            Number of movies
+                        </td>
+                        <td style="padding: 5px;">
+                            33
+                        </td>
+                        <td style="padding: 5px;">
+                            49
+                        </td>
+                        <td style=" padding: 5px;">
+                            24
+                        </td>
+                        <td style="padding: 5px;">
+                            8,30
+                        </td>
+                        <td style=" padding: 5px;">
+                            1
+                        </td>
+                        <td style="padding: 5px;">
+                            66
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">
+                            Genres
+                        </td>
+                        <td style="padding: 5px;">
+                            Drama, Adventure, Action
+                        </td>
+                        <td style="padding: 5px;">
+                            Comedy, Drama, Romance
+                        </td>
+                        <td style="padding: 5px;">
+                            Drama, Action, Thriller
+                        </td>
+                        <td colspan="3" style="padding: 5px;">
+                            Most popular genres:<br>
+                            Drama, Comedy, Thriller, Action, Romance
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    Their vote count is high compared to the rest of the network, but their rating is not that high.
+                    This shows that directors who are central in the network do not necessary have a high rating.
+                    However their vote count is also an indicator of popularity or at least of how famous they are, and
+                    this is quite high for all of them. The fact that they all have a high number of movies is not
+                    surprising as this will of course give them a higher probality of being connected with other
+                    directors. Their genres are all very popular genres which also increases the likelihood that they
+                    share actors with other directors.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Community Detection</h2>
+                    <p>In this section we will describe the communities of the netork and analyse where these
+                        communities come from. We will do this by looking at some of the attributes that we have for the
+                        directors in our dataset.</p>
+                    <p>We found the following communities</p>
+                    <div class="indented">
+                        <table class="community_table">
+                            <tr>
+                                <th>
+                                    Community
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    0
+                                </th>
+                                <td>
+                                    417
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    1
+                                </th>
+                                <td>
+                                    223
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    2
+                                </th>
+                                <td>
+                                    394
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    3
+                                </th>
+                                <td>
+                                    90
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    4
+                                </th>
+                                <td>
+                                    100
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    5
+                                </th>
+                                <td>
+                                    48
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p style="margin-top: 30px">The modularity is 0,228. The modularity is above 0 which means that
+                        there are more edges within the communities than there are across communities. However the
+                        modularity is not that high which means that the community are not that well defined.</p>
+                    <div class="image-wrap center">
+                        <img src="images/communities.png" alt="communuties" class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position">The communities of the network illustrated using different colors.</span>
+                        </div>
+                    </div>
+                    <p>The plot above illustrates the communities using different colours for each community. We see
+                        that the network is split into three bigger parts and two smaller parts at the right and one
+                        small community inside another one</p>
+                    <h3>Analysis of communities</h3>
+                    <p>We will look at three different attributes: language, genre, active period and rating, to see if
+                        anything can be said about the communities regarding these. We want to find out if the
+                        communities can be distinguished using any of these attributes.</p>
+
+                    <h3>Languages</h3>
+                    <p> We have seperated the directors into groups of languages based on the language of their
+                        movies.</p>
+                    <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                        <img style="display: flex; flex:5;" src="images/confusion_matrix_lang.png"
+                             alt="degree distribution" class="rounded img-fluid image image-2">
+                        <div style="display: flex; flex: 3; padding-left: 20px">
+                            <p style="display: flex;"> The figure shows a heatmap where each cell shows the percentage
+                                of the community that direct movies of that specific language. Community 3 and 5 seem to
+                                be based on language. Community 3 mostly has mostly directors of french movies and some
+                                italian movies, community 5 mostly directors of japanese and cantonese movies. The other
+                                communities have mostly directors of english movies however community 2 does have a
+                                higher percentage of movies of many of the smaller languages than the other
+                                communities. </p>
+                        </div>
+                    </div>
+                    <h3>Genres</h3>
+                    <p>We have created one group for each genre and added directors to the groups that they have worked
+                        whithin. One director might have worked in more than one genre.</p>
+                    <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                        <img style="display: flex; flex:5;" src="images/confusion_matrix_genres.png"
+                             alt="degree distribution" class="rounded img-fluid image image-2">
+                        <div style="display: flex; flex: 3; padding-left: 20px">
+                            <p style="display: flex;"> The figure shows a heatmap where each cell shows the percentage
+                                of the community that have directed movies in that specific genre. As mentioned above,
+                                each directed might have worked in multiple genres therefor the percentages for one
+                                community do not add up to 100%. </p>
+                        </div>
+                    </div>
+                    <p>We observe that all communities are a mix of multiple genres which makes sense since we know that
+                        directors and actors do not restrict themselves to a single genre. There are some genres that
+                        are quite common among all communities such as drama, comedy, romance, thriller and action.
+                        These are all genres that are somewhat general and a lot of movies will have these genres listed
+                        as their genre along with other more significant genres. There are however some differences
+                        between the communities that might be of significans. Communty 4 has directors working in
+                        multiple genres that are not as common in the other communities such as music, history, mystery,
+                        western and war. Community 5 has a high percentage of directors working in the genres foreign,
+                        fantasy and science fiction. Community 1 has a high percentage of directors working in the
+                        genres thrillers, mystery, horror and science fiction.</p>
+
+                    <h3>Active Period</h3>
+                    <p> We have created one group for each decade and add directors to the group if they were active in
+                        that decade. We define the active period of a director as the time from the release of the first
+                        movie to the release of the last movie.</p>
+                    <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                        <img style="display: flex; flex:5;" src="images/confusion_matrix_period.png"
+                             alt="degree distribution" class="rounded img-fluid image image-2">
+                        <div style="display: flex; flex: 3; padding-left: 20px">
+                            <p style="display: flex;"> The figure shows a heatmap where each cell is the percentage of
+                                the community that were active in that decade. A director can be active over a period of
+                                more than 10 years and hence can be in multiple groups. Therefor the percentages of each
+                                community do not add up to 100%. We observe that community 4 consists mainly of older
+                                movies. It makes sense that the directors of older movies are grouped together as not
+                                many of the same actors are acting in older as well as newer movies. We can also spot
+                                that directors of movies released after year 2000 are in community 0 and 2, while
+                                directors of movies from 1980-2000 are more dominant in community 1. Community 3 and 5
+                                are not as concentrated on a specific period but are spread out from 1970 until
+                                2020. </p>
+                        </div>
+                    </div>
+                    <h3>Rating</h3>
+                    <p>We have divided the ratings into 5 groups of equal size: low, medium-low, medium, medium-high and
+                        high. The directors are then added to the group for which their agerage rating falls within.</p>
+                    <div class="indented" style="display: flex; align-items: center; flex-direction: row">
+                        <img style="display: flex; flex:5;" src="images/confusion_matrix_rating.png"
+                             alt="degree distribution" class="rounded img-fluid image image-2">
+                        <div style="display: flex; flex: 3; padding-left: 20px">
+                            <p style="display: flex;"> The figure shows a heatmap where each cell is the percentage of
+                                the community that have a rating in that group. There does not seem to be a high
+                                correlation between rating and communities. Community 0 and 1 have a larger part of low
+                                rating directors while community 2, 3 and 5 have a larger part of high rating directors.
+                                Community 4 has the largest part around the medium rating. However there is not a huge
+                                difference in the numbers. </p>
+                        </div>
+                    </div>
+                    <h3>Conclusion about communities</h3>
+                    <p>So what can we say about the communities? First of all, the modularity is not significantly high,
+                        so the communities are not that solid. We examined different groupings of the directors to see
+                        if there is a correlation with the found communities. We tried grouping the directors by
+                        language, by genre, by active period and by rating. We discovered the following about the
+                        communities:</p>
+                    <ul>
+                        <li>Community 0 consists almost solely of directors of english movies. Regarding active period
+                            it consists mostly of directors active in the recent decades.
+                        </li>
+                        <li>Community 1 also consist mainly of directors of english movies. It has a high percentage of
+                            directors working in drama, thrillers and action. Over half of the community has been rated
+                            below medium and most directors were active in the years 1980-2010.
+                        </li>
+                        <li>Community 2 has a higher number of percentage of directors working in many of the smaller
+                            languages than the other communities. It consists mainly of directors active after 1990.
+                            Almost haf of the community has been rated above average.
+                        </li>
+                        <li>Community 3 consists mainly of directors of french and italian movies. Most of the directors
+                            in that community are working with commedy and drama. The directors have been active in the
+                            last 50 or so years. Over half of the community has been rated above average.
+                        </li>
+                        <li>Community 4 is characteries as being the community of directors of older movies. Most
+                            directors were active in the years 1940-1990. The genres are also a bit different than of
+                            the other communities. These directors were working more in the genres music, history,
+                            mystery, western and war which are genres that were more popular a few decades ago than they
+                            are today.
+                        </li>
+                        <li>Community 5 consists mainly of directors of japanese and cantonese movies. These directors
+                            are directing foreign, fantasy and science fiction movies and a more than a third of the
+                            community has received a high rating.
+                        </li>
+                    </ul>
+                    <p>
+                        The analysis showed that some of the communities seem to be defined by attributes such as
+                        language (3 and 5) and active period (4) while the others are more mixed and it's harder to
+                        distinguish what makes the community.
+                    </p>
+                    <b>So in what communities are our most central directors?</b>
+                    <p> Our guess would be in the mixed communities 0, 1 or 2. These are afterall also the largest
+                        communities and they seem to hold the more mainstreem directors.</p>
+                    <ul>
+                        <li>Steven Spielberg: 2</li>
+                        <li>Woody Allen: 1</li>
+                        <li>Ridley Scott: 2</li>
+                    </ul>
+                    <p>The most central nodes are indeed in communies 1 and 2.</p>
+                    <h3>Conclusion</h3>
+                    <p>
+                        The network we created consisted of movie directors which are connected if they have hired the
+                        same actors. The structure of the network resembles that of a social network and the small world
+                        property holds. The top three directors regarding centrality are all famous directors which have
+                        directed a lot of movies and mostly work in the more popular genres.
+                        <br>
+                        <br>
+                        We found 6 communities within the network and analysed these to find out what made these
+                        communities. We found out that some of the communities seemed to be based on language and the
+                        active periods of the directors while some were more a general mix.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="ftco-section bg-light" id="wordclouds">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">Wordclouds</h1>
+
+                    <p>
+                        While working with our wordclouds, we found quickly which genres where linked together and by
+                        which environment. In appears that some genres are clustered together most of the time because
+                        of a serie of movie or some sort of synergy.
+                    </p>
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block" style="text-align: center">
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#action">
+                                    Action
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#adventure">
+                                    Adventure
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#animation">
+                                    Animation
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#comedy">
+                                    Comedy
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#crime">
+                                    Crime
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#documentary">
+                                    Documentary
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#drama">
+                                    Drama
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#family">
+                                    Family
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#fantasy">
+                                    Fantasy
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#foreign">
+                                    Foreign
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#horror">
+                                    Horror
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#music">
+                                    Music
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#history">
+                                    History
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#mystery">
+                                    Mystery
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#romance">
+                                    Romance
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#scifi">
+                                    Science Fiction
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#tvmovie">
+                                    TV Movie
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#thriller">
+                                    Thriller
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#war">
+                                    War
+                                </button>
+                                <button type="button" style="margin-bottom: 20px" class="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#western">
+                                    Western
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="modal fade" id="action" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Action</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>After creating the Action wordcloud, we found out that a lot of words sound like japanese names. When looking deeper into it, it appears that because a lot of japanese movies got famous worldwide, they got translated in english, which got them in our dataset.
+                                    
+                                      </p>
+                                      <p>
+                                    Furthermore, japanese characters in movies are known for calling each others out during battle, which could explain why we have a lot of hero's names in our wordcloud.</p>
+                                      
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Action.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="adventure" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Adventure</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Adventure movies are often related to fantastic worlds. We have for example, in our wordcloud, references to the world of Obelix, Pokemons (Celebi & Pikatchu) and Littlefoot.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Adventure.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="animation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Animation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Animation movies mostly reflects our childhood with universes like Pokemon, Winnie the Pooh, Monster High and countless others.
+                                    </p>
+                                    <p>Movies found with the Animation genre are often Fantastic and/or about adventure.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Animation.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="comedy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Comedy</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>We can hardly miss it, you probably already noticed but we found a reference to American Pie in this wordcloud (Stifler), a very known comedy movie with numerous volumes.</p>
+                                    <p>
+                                        In addition, we found an unusual word here for subtitles, "Torrente". At first we thought that it could be because of some subtitles where the word would be written to notify a specific download link for pirates or others. In this case, "Torrente" would appear in every wordcloud, so we dug deeper. In the end, it seems like there are multiple movies about a cop in spain.
+                                    </p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Comedy.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="crime" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Crime</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>For Crimes, we find again "Torrente" but this time with other famous inspector names, like Poirot or Marple for example.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Crime.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="documentary" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Documentary</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>The Documentary genre is often linked with hot topics. We can notice for example the word "Bitcoin" which got a lot of documentaries during its boom in 2017.</p>
+                                    
+                                    <p>In addition to hot topics, we can found out of the norms people who had documentaries made about their life, how they became famous etc.
+                                      </p>
+                                      
+                                    <p>On a sidenote, we found weird squares in our wordcloud, those squares could be used in our subtitles by National Geographic Channel to substitute there logo.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Documentary.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                        <div class="text">
+                                            <span class="position">The network of directors</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="drama" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Drama</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Dramas are often one time movies, which means that some words might not be particularly more used than others.</p>
+                                    
+                                      <p>On another note, if we included TV shows in our dataset, we would surely have something relating to "The Young and the Restless" because TV shows are often more oriented towards drama to keep the audience's attention.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Drama.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="family" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Family</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Family movies are, like Animation and Fantasy, often linked together because it implies most of the time a fantastic world. So we found, once again, universes like Pokemon and Littlefoot but this time accompanied by puppet shows.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Family.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="fantasy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Fantasy</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>The Fantasy genre is one of the broadest genres because it suits a lot of movie subjects. We found again universes like Pokemon and Monster High but this time we have action movies too. For example The Mummy and Fantomas.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Fantasy.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="foreign" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Foreign</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Foreign words are kind of unexpected, we didn't know what we could end up with and so we have a lot of words from different languages, representing foreign culture as best as we would.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Foreign.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="horror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Horror</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Movies from the Horror genre are a little different from what we usually have. Indeed, a lot of words are in the end names because it appears that people get called out more often in horror movies than in other movies.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Horror.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="music" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Music</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Music.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">History</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>History is often related to the Documentary so it often relates to hot topics from the moment like bitcoin. The rest of the History section is about lords and kings from older times.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/History.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="mystery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Mystery</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>The Mystery movie genre is often related to the Crime genre because no crime exist without Mystery, as we can testify from the huge "Poirot" in the middle of the wordcloud. In addition, a lot of other words are coming from mysterical places around the world.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Mystery.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="romance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Romance</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Romance words are often names because its often about a relationship or someone falling in love, which in the script makes someone's name coming back often.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Romance.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="scifi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Science Fiction</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body"><p></p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Science%20Fiction.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="tvmovie" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">TV Movie</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p></p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/TV%20Movie.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="thriller" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Thriller</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p></p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Thriller.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="war" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">War</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Words from the War movie genre is often related to generals and lieutenants.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/War.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="modal fade" id="western" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Western</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Because Western movies were more often produced during early years of the cinema, related words are often heroes and main caracters from those movies. They indeed had a lot of success among older generations.</p>
+
+                                    <div class="image-wrap center">
+                                        <img src="images/wordclouds/Western.png" alt="Round Image" class="rounded img-fluid image image-2">
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section" id="sentanalysis">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">Sentiment analysis</h1>
+                    <p>
+                        In this section, we will take a closer look at what the text from movie subtitles can tell us
+                        about the movies and their authors, the directors!
+                    </p>
+                    <h5 class="card-title">Sentiment</h5>
+                    <p>Using LabMT wordlist downloaded from the article <a
+                            href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0026752">Temporal
+                        Patterns of Happiness and Information in a Global Social Network: Hedonometrics and
+                        Twitter's</a> source files list.
+
+                        The file represents a set of 10,222 words, their average happiness evaluations according to
+                        users on Mechanical Turk and some other information that we are not using in this project.</p>
+                    <p>
+                        We started by loading subtitles of our movies and making a token list out of them, removed
+                        stopword and calculated the sentiment value of each subtitle file and called this value the
+                        sentiment of the movie. In the figure, we can see the distribution of sentiment.
+                    </p>
+                    <div class="image-wrap center">
+                        <img style="margin-bottom: 30px" src="images/fig1_avrg_sentiment.png" alt="communuties"
+                             class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position"> Distribution of Movie sentiment </span>
+                        </div>
+                    </div>
+                    <p>
+                        Movie sentiments seem to be distributed normally. The numerical values for this data set are as
+                        follow:
+                    </p>
+
+                    <ul>
+                        <li>The average sentiment of movies is: 4.8984</li>
+                        <li>The standard deviation of movies is: 0.2850</li>
+                    </ul>
+
+                    <p>
+                        Movies, in general, seem to be quite happy texts. If we compare these values to the values
+                        we found when analyzing political tweets of us politicians in assignment two of this subject,
+                        the average sentiment when removing the tweets with the sentiment value of 0 was around 4.3,
+                        which is still 0.5 lower than this data set. For more information on tweet analysis
+                        checkout our <a href="02_Assignment/assignment2.ipynb">assignment 2 notebook</a>
+                    </p>
+                    <p>
+                        We can also notice that the standard deviation of movie sentiment is much lower than the tweet
+                        one.
+                        One of the possible reasons is probably due to the length of the movies being bigger.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Positive and negative movies</h5>
+                    <p>
+                        We then decided to take a look at the movies that stand out from the crowd. We selected the
+                        movies that were more than two standard deviations away from the mean.
+                        We called the movies with small values negative or sad movies and the movies with high sentiment
+                        values positive or happy movies.
+                    </p>
+                    <p>With these restrictions we got </p>
+                    <ul>
+                        <li>277 sad movies</li>
+                        <li>37 happy movies</li>
+                    </ul>
+
+                    <p>For both movie t sets, we computed their tf-ids and created the word cloud that will hopefully
+                        give us more inside to the words used in each of the extremes. The word clouds can be seen in
+                        the figures below:</p>
+
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#Negativewordclouds">Sad/Negative
+                                            word clouds</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#Positivewordclouds">Happy/Positive
+                                            word clouds</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content border-0">
+                            <div class="tab-pane container p-4 active text-center" id="Negativewordclouds">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig2_sad_wordclud.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from sad/negative movies </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="Positivewordclouds">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig3_happy_wordclud.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from happy/positive movies </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        The word cloud is not as representative as we hoped.
+                    </p>
+                    <p>
+                        Anyway, there were quite some words we expected in positive movies. For example, Christmas seems
+                        to be present in happy movies a lot. We also noticed some Spanish words the clouds, for example,
+                        chica that seems to be a popular word in positive movies. In our great surprise word, Bieber
+                        seems to be the most represented word in positive movies set. Words like youtube and applejack
+                        also surprised us.
+                    </p>
+                    <p>
+                        The negative movie word cloud surprised us more. This is mostly due to us only having sentiment
+                        scores for the English language. This analysis could be improved by adding sentiment values for
+                        other languages. Anyway, words like chffffff seem to have no real meaning. There were also a lot
+                        of words that seem like stopword from other languages. There were also quite a few words that
+                        seem were to be expected in the sad movie set, for example screeching, danger, justice, army and
+                        so on.
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Sentiment of directors</h5>
+                    <p>
+                        We then grouped the movies of each director. We were again interested in the distribution of
+                        sentiment of each director. The results can be seen in the figure below:
+                    </p>
+                    <div class="image-wrap center">
+                        <img style="margin-bottom: 30px" src="images/fig4_director_sentiment_dist.png"
+                             alt="director_sentiment"
+                             class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position"> Distribution of Directors sentiment </span>
+                        </div>
+                    </div>
+                    <p>There is no surprise that the sentiment is again distributed normally. The numerical values are
+                        as follows:</p>
+                    <ul>
+                        <li>The average sentiment of directors work is: 4.9084</li>
+                        <li>The standard deviation of directors work is: 0.1878</li>
+                    </ul>
+
+                    <p>Again the sentiment of the director's work is even higher than the tweeter one. It is also higher
+                        than the average movie sentiment. </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Positive and negative Directors</h5>
+                    <p>
+                        We again selected happy/positive and sad/negative directors using the same criteria as with
+                        movies to get two sets of directors.
+                    </p>
+                    <p>The sizes of the sets are as follows: </p>
+                    <ul>
+                        <li>43 sad directors</li>
+                        <li>19 happy directors</li>
+                    </ul>
+
+                    <p>For reasons stated before we are not surprised that there are quite a few non-English speaking
+                        directors in the negative set since most of their work is not in English.</p>
+
+                    <p>We again generated word clouds for each director group and got the following word clouds</p>
+
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#Negativewordcloudsdir">Sad/Negative
+                                            director word clouds</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#Positivewordcloudsdir">Happy/Positive
+                                            director word clouds</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content border-0">
+                            <div class="tab-pane container p-4 active text-center" id="Negativewordcloudsdir">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig5_sad_directors.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from sad/negative directors </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="Positivewordcloudsdir">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig6_happy_directors.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from happy/positive directors </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        The results of positive and negative director work surprised us a lot. Words like Pikachu, Pika,
+                        Anakin, and words like that surprised us a lot. The Positive word cloud was even weirder. There
+                        where almost only names in it and maybe some words that we could make sense of, for example,
+                        pajamas
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Central Directors</h5>
+                    <p>
+                        We focused on three directors that were in the most central nodes in most of the centrality
+                        measures. We did in the network analysis part of this project for the following three Directors:
+                    </p>
+                    <ul>
+                        <li>Ridley Scott</li>
+                        <li>Woody Allen</li>
+                        <li>Steven Spielberg</li>
+                    </ul>
+                    <p>We first took a look at their sentiment in comparison to other directors. This can be seen very
+                        well in figure bellow
+                    </p>
+                    <div class="image-wrap center">
+                        <img style="margin-bottom: 30px" src="images/fig7_dir_sentiment_with_central_directors.png"
+                             alt="director_sentiment"
+                             class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position"> Distribution of directors sentiment with central directors </span>
+                        </div>
+                    </div>
+                    <p>It comes as no surprise that out of these three, Woody Allen has the highest sentiment since he
+                        is known more for his work in romantic and drama genres of movies. Both Ridley Scott know for
+                        Alien, Blade Runner, Gladiator ... and Steven Spielberg is known for Jaws, Jurassic Park,
+                        Schindler's list ... are more of directors that normally produce a bit darker movies, and
+                        therefore have a lower average sentiment. </p>
+
+                    <p>We also generated the word clouds comparing and representing their work.</p>
+
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#RidleyScottwc">RidleyScott
+                                            word clouds</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#WoodyAllenwc">Woody Allen
+                                            word clouds</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#StevenSpielbergwc">Steven Spielberg
+                                            word clouds</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content border-0">
+                            <div class="tab-pane container p-4 active text-center" id="RidleyScottwc">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig8_wordcloud_RidleyScott.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from Ridley Scott's movies </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="WoodyAllenwc">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig9_wordcloud_WoodyAllen.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from Woody Allen's movies </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="StevenSpielbergwc">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig10_wordcloud_StevenSpielberg.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Word cloud generated from Steven Spielberg's movies </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p> In Ridley Scott word clouds there are quite a few names from greek mythology, such as Maximus,
+                        Hermes, and Ramses which comes as no surprise. There are also words like rover and starling that
+                        point to more fantasy/space movies. </p>
+
+                    <p>Woody Allen uses words like actresses, sexy and novel a lot which also comes as no surprise since
+                        his style is more romantic and easy-going. </p>
+
+                    <p>Steven Spielberg uses words like the grail, nicht, and ark in his work, which tells us something
+                        about his more adventure colored movies. As with the other two directors, a lot of words in
+                        clouds are the character names, especially if there are more movies with the same
+                        characters.</p>
+                    <p>Just by analyzing word clouds of different directors, we can tell something about their style.
+                        Both Ridley Scott and Steven Spielberg make more action and sci-fi movies when Allen produces
+                        mostly drama movies.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Language diversity for directors</h5>
+                    <p>
+                        We also analyzed the language diversity used by directors.
+                    </p>
+
+                    <p>What even is language diversity.</p>
+                    <p>We call language diversity the measure of how many different words are used in directors'
+                        vocabulary compared to their vocabulary size.</p>
+
+                    <p>We can see the language diversity distribution of director's work in figure bellow</p>
+
+                    <div class="image-wrap center">
+                        <img style="margin-bottom: 30px" src="images/fig11_director_lang_diversity.png"
+                             alt="director_sentiment"
+                             class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position"> Distribution of language diversity of directors </span>
+                        </div>
+                    </div>
+                    <p>
+                        As expected the distribution of language diversity seems to be normal. Again the numerical
+                        values are as follows:</p>
+                    <ul>
+                        <li>Average language diversity of directors work is: 0.2229</li>
+                        <li>Standard language diversity of directors work is: 0.0770</li>
+                    </ul>
+
+                    <p>
+                        It seems like this measure alone doesn't tell us much about directors. We see that popular
+                        directors
+                        are the ones that have really low diversity value, but that is mainly due to them having made a
+                        lot
+                        of movies.
+                    </p>
+                    <p>
+                        Lets again take a look at the central director's ant their diversity. These measures are the
+                        best
+                        represented in the figure below.
+                    </p>
+                    <div class="image-wrap center">
+                        <img style="margin-bottom: 30px" src="images/fig12_director_lang_diversity_with_central.png"
+                             alt="director_sentiment"
+                             class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position"> Distribution of language diversity of directors with central direcotrs </span>
+                        </div>
+                    </div>
+                    <p>
+                        We suspect that the reason for their low diversity is mostly due to them having made a lot of
+                        movies, and therefore even if they are having really big vocabulary still doesn't outweigh the
+                        combined length of their work
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Most used words for directors</h5>
+                    <p>
+                        We also looked at the distribution of most used words in each of the highest centrality
+                        directors' work. We did that by selecting the 75 most used words in their work by counting it
+                        and sorting it. We then plotted the results in the next figures.
+
+                    </p>
+
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#RidleyScottwu">RidleyScott
+                                            words usage</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#WoodyAllenwu">Woody Allen
+                                            words usage</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#StevenSpielbergwu">Steven Spielberg
+                                            words usage</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content border-0">
+                            <div class="tab-pane container p-4 active text-center" id="RidleyScottwu">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig13_com_freq_RidleyScott.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Ridley Scott's movies word usage distribution</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="WoodyAllenwu">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig14_com_freq_WoodyAllen.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position">Woody Allen's movies word usage distribution</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="StevenSpielbergwu">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig15_com_freq_StevenSpielberg.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position">Steven Spielberg's movies word usage distribution</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <p>We can see that the frequencies look quite similar for all directors. This is probably due to the
+                        common words used in everyday English that outweigh the ones that may represent each individual
+                        director..</p>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Most used words for directors</h5>
+                    <p>
+                        We were also interested in how movies changed over time. To get an inside in this kind of
+                        information we used lexical dispersity visualization. This is done marking each occurrence of a
+                        word in text by a small line and then plotting the graph. With this, we get an inside on how
+                        texts change over time.
+                    </p>
+                    <p>
+                        For this need, we ordered all of our movie data by their release date, and then join them all
+                        together. We tried generating the plots for quite some words, some of them are representative
+                        and some of them just seem to be too common to tell us anything about the change in the language
+                        used.
+                    </p>
+
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#disper1">Dispersity plot
+                                            1</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#disper2">Dispersity plot 2</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#disper3">Dispersity plot 3</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content border-0">
+                            <div class="tab-pane container p-4 active text-center" id="disper1">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig16_dispersity_1.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Dispersity plot: Lady, money, gun, internet, americ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="disper2">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig17_dispersity_2.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position">Dispersity plot: Potter, Bond, Indy, Batman, Jedy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="disper3">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig18_dispersity_3.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position">Dispersity plot: Fuck, Marry, Beatles, Queen, Aliens</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        For example, if we take a look at the dispersity plot of the word Indy, we get the
+                        rough placement of Indiana Jones movies that was brought to life by Steven Spielberg
+                        and George Lucas and played by Harrison Ford. We also plotted some other words that
+                        are specific to famous movies, for example, Potter, Bond, Batman, Jedi...
+                    </p>
+                    <p>
+                        We also tried doing the same for the directors with the highest centrality. We again
+                        selected their work and picked out some words that seem to be interesting for each
+                        of the selected directors, and some universal ones.
+                    </p>
+
+                    <div class="tabulation tabulation2">
+                        <div class="d-flex tabs border border-left-0 border-right-0 border-top-0 justify-content-center">
+                            <div class="d-inline-block">
+                                <ul class="nav nav-tabs border-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#RidleyScottdp">RidleyScott
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#WoodyAllendp">Woody Allen
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#StevenSpielbergdp">Steven Spielberg
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content border-0">
+                            <div class="tab-pane container p-4 active text-center" id="RidleyScottwdp">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig19_dispersity_RidleyScott.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position"> Ridley Scott's dispersity plot</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="WoodyAllendp">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig20_dispersity_WoodyAllen.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position">Woody Allen's dispersity plot</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane container p-4 fade text-center" id="StevenSpielbergdp">
+                                <div class="image-wrap center">
+                                    <img style="margin-bottom: 30px" src="images/fig21_dispersity_StevenSpielberg.png"
+                                         alt="sad_wordcloud"
+                                         class="rounded img-fluid image image-2">
+                                    <div class="text">
+                                        <span class="position">Steven Spielberg's dispersity plot</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                        Again we can see that word love is used a lot more in the Woody Allen than in any other
+                        Directors work
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="card-title">Director community sentiment</h5>
+                    <p>
+                        We also tried to check if there are any noticeable differences between the communities of
+                        directors described in the network analysis part of this assignment. The combined sentiments can
+                        be observed in the figure below.
+                    </p>
+
+                    <div class="image-wrap center">
+                        <img style="margin-bottom: 30px" src="images/fig22_community_sentiment.png"
+                             alt="director_sentiment"
+                             class="rounded img-fluid image image-2">
+                        <div class="text">
+                            <span class="position"> Distribution of community sentiments</span>
+                        </div>
+                    </div>
+
+                    <div class="indented">
+                        <table class="community_table">
+                            <tbody>
+                            <tr>
+                                <th>
+                                    Community
+                                </th>
+                                <th>
+                                    Mean
+                                </th>
+                                <th>
+                                    Standard deviation
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Community 1
+                                </th>
+                                <td>
+                                    4.9592
+                                </td>
+                                <th>
+                                    0.2111
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Community 2
+                                </th>
+                                <td>
+                                    4.9248
+                                </td>
+                                <th>
+                                    0.1334
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Community 3
+                                </th>
+                                <td>
+                                    4.8870
+                                </td>
+                                <th>
+                                    0.1835
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Community 4
+                                </th>
+                                <td>
+                                    4.8646
+                                </td>
+                                <th>
+                                    0.1519
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Community 5
+                                </th>
+                                <td>
+                                    4.8463
+                                </td>
+                                <th>
+                                    0.1372
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Community 6
+                                </th>
+                                <td>
+                                    4.7859
+                                </td>
+                                <th>
+                                    0.2184
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p>
+                        The last community's sentiment is lower than others, we mostly assume that is due to there being
+                        a lot of foreign directors in that community.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="ftco-section ftco-section-2">
+        <div class="col-md-12 text-center">
+            <p class="mb-0">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>
+                document.write(new Date().getFullYear());
+
+            </script>
+                All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
+                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+        </div>
+    </footer>
+
+</div>
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+
+<script src="js/nouislider.min.js"></script>
+<script src="js/moment-with-locales.min.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
